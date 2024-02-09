@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="profile">
+    <img class="profile-ava" src="{{ url_for('userava') }}" alt="">
+    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="cng-form">
+                <label class="label-cngava" for="fileInput">Change photo</label>
+                    <input type="file" id="fileInput" name="file">
+                    <input type="submit" class="cng-sbm" value="update">
+            </div>
+        </form>
+    <span><a class="prf-lgt" href="{{ url_for('logout') }}">logout</a></span>
+    <form action="{{ url_for('change_info') }}" method="post">
+        <div class="self-info">
+            <span>Name: <input class="enter-field" type="text" name="name" value="{{ current_user.getName() }}"></span>
+            <span>Email: <input class="enter-field" type="text" name="email" value="{{ current_user.getEmail() }}"></span>
+            <span class="cng-info"><input class="cng-info-input" type="submit" value="change"></span>
+        </div>
+    </form>
+    <br>
+    <span style="display: flex; margin-left: 50px; font-size: 18px; gap: 65px;">My Posts:  
+        <a class="link-add-post" href="{{ url_for('add_post') }}">
+            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#ff1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+        </a>
+    </span> 
+    <ul class="my-posts-ul">
+        {% if not my_posts %}
+            <span class="dnt-pst">you dont have post yet</span>
+        {% else %}
+            {% for m in my_posts %}
+                <li class="list-my-posts"><span class="each-to-edit-post"><a href="{{ url_for('edit_post' , post_id=m.post_id) }}">{{ m.title }}</a></span></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

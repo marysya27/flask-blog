@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for msg_type, msg_text in get_flashed_messages(True) %}
+    {% if msg_type == 'message' %}
+        <span class="msg-flash">{{ msg_text }}</span>
+    {% endif %}
+{% endfor %}
+    <form action="{{url_for('add_post')}}" method="post" enctype="multipart/form-data">
+        <div class="add-post-div">
+            <span>Title: <input class="title-input" type="text" name="name"></span> <br>
+            <span>Text: <textarea class="text-input" type="text" name="text"></textarea></span> <br>
+            <span>Tags: <input class="tags-input" type="text" name="tags"></span> <br>
+            <label class="add-post-sel-file" for="filename">select file</label>
+            <span>Select img: <input type="file" id="filename" name="file_post" accept="image/*"></span>
+            <span><input class="btn-add-post" type="submit" value="Add"></span>
+        </div>
+    </form>
+{% endblock %}

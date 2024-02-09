@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="full-login-regis">
+    {% for msg_type, msg_text in get_flashed_messages(True) %}
+    {% if msg_type == 'message' %}
+        <span class="msg-flash">{{ msg_text }}</span>
+    {% endif %}
+{% endfor %}
+
+    <form action="{{url_for('login')}}" method="post">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] -%}
+            <div class="each-field-login">
+                <span>{{ field.label() }}</span>
+                {% if field.errors %}
+                    <span>{{ field(class="enter-field invalid") }}</span>
+                    <span class="invalid-feedback">
+                        {% for e in field.errors %}
+                        {{ e }}
+                        {% endfor %}
+                    </span>
+                {% else %}
+                    <span>{{ field(class="enter-field") }}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <span class="rmbme">{{ form.remember.label() }} <label>{{ form.remember() }}</label> </span>
+        <span class="btn-enter">{{ form.submit(class='input-submit') }}</span>
+
+        <span class="msg-account">Don't have an account yet?</span>
+        <span class="btn-register"><a class="link-register" href="{{url_for('register')}}">register</a></span>
+    </form>
+</div>
+{% endblock %}
